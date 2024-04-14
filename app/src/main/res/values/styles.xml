@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="boton_oscuro">
+        <item name="backgroundTint">@color/Dark_burgundy</item>
+        <item name="android:textColor">@color/Creamy_yellow</item>
+    </style>
+    <style name="boton_claro">
+        <item name="backgroundTint">@color/Creamy_yellow</item>
+        <item name="android:textColor">@color/Dark_burgundy</item>
+    </style>
+    <style name="caja_texto">
+        <item name="boxStrokeColor">@color/Creamy_yellow</item>
+        <item name="hintTextColor">@color/Creamy_yellow</item>
+        <item name="startIconTint">@color/Dark_burgundy</item>
+        <item name="android:textColorHint">@color/Dark_burgundy</item>
+        <item name="passwordToggleTint">@color/Dark_burgundy</item>
+        <item name="cornerRadius">0dp</item>
+        <item name="alpha">0.8</item>
+    </style>
+    <style name="interior_caja">
+        <item name="backgroundTint">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <!--<style name="menuBottom">
+        <item name="backgroundTint">@color/Hadopelagic_Water</item>
+        <item name="itemIconTint">@color/navigation_icon_color</item>
+        <item name="itemTextColor">@color/navigation_icon_color</item>
+    </style>-->
+</resources>
