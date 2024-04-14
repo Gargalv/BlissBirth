@@ -15,6 +15,9 @@
         android:theme="@style/Theme.BlissBirth"
         tools:targetApi="31">
         <activity
+            android:name=".Login"
+            android:exported="false" />
+        <activity
             android:name=".Splash"
             android:exported="true">
             <intent-filter>
