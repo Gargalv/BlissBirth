@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="Pale_Lavender_Pink">#FAEFF1</color>
+    <color name="Dark_burgundy">#531212</color>
+    <color name="Vivid_red">#FF0F0B</color>
+    <color name="Creamy_yellow">#FFFC97</color>
+    <color name="Mint_green">#7EE893</color>
+    <color name="Sky_blue">#6DD7FF</color>
 </resources>
