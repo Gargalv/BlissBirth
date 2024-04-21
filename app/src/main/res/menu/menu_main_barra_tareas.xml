@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/home"
+        android:title="Home"
+        android:icon="@drawable/home_ic"
+        android:contentDescription="none"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/calendar"
+        android:title="Calendar"
+        android:icon="@drawable/calendar_ic"
+        android:contentDescription="none"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/map"
+        android:title="Map"
+        android:icon="@drawable/mapa_ic"
+        android:contentDescription="none"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/profile"
+        android:title="Profile"
+        android:icon="@drawable/user_ic"
+        android:contentDescription="none"
+        app:showAsAction="always"
+        >
+    </item>
+
+
+
+</menu>
