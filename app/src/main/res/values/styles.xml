@@ -22,9 +22,9 @@
         <item name="backgroundTint">@color/black</item>
         <item name="android:textColor">@color/black</item>
     </style>
-    <!--<style name="menuBottom">
-        <item name="backgroundTint">@color/Hadopelagic_Water</item>
-        <item name="itemIconTint">@color/navigation_icon_color</item>
-        <item name="itemTextColor">@color/navigation_icon_color</item>
-    </style>-->
+    <style name="menuBottom">
+        <item name="backgroundTint">@color/Dark_burgundy</item>
+        <item name="itemIconTint">@color/Creamy_yellow</item>
+        <item name="itemTextColor">@color/Creamy_yellow</item>
+    </style>
 </resources>
