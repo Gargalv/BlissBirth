@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "691481720621",
+    "project_id": "blissbirth-85959",
+    "storage_bucket": "blissbirth-85959.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:691481720621:android:de3fbcf7e08ee161e805a4",
+        "android_client_info": {
+          "package_name": "com.ama.blissbirth"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkgarXL8OXicOVTi1x0aZe2MbVfOE-Xms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
