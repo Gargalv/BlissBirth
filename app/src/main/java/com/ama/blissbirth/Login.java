@@ -13,6 +13,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Login extends AppCompatActivity {
     private Button reg, log;
@@ -64,7 +66,7 @@ public class Login extends AppCompatActivity {
                 } else {
                     //showToast("Email / Password incorrectas");
                     //email.setError("Revisar");
-                    passwd.setError(getResources().getString(R.string.revisar));
+                    passwd.setError("Revisar");
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -81,6 +83,8 @@ public class Login extends AppCompatActivity {
         toMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(toMain);
     }
+
+    /*
     @Override
     protected void onStart() {
         super.onStart();
@@ -88,7 +92,7 @@ public class Login extends AppCompatActivity {
         if (user != null) {
             goToMain();
         }
-    }
+    }*/
     private void setError() {
         email.setErrorEnabled(false);
         passwd.setErrorEnabled(false);
