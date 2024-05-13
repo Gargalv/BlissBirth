@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
     private Button reg, log;
@@ -24,11 +25,22 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        firebaseAuth = FirebaseAuth.getInstance();
 
+        //Declaracion de variables
         email = findViewById(R.id.username);
         passwd = findViewById(R.id.password);
         reg = findViewById(R.id.register);
         log = findViewById(R.id.login);
+
+        reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toRegister = new Intent(Login.this, Register.class);
+                startActivity(toRegister);
+            }
+        });
+
         log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,13 +60,7 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
-        reg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent toRegister = new Intent(Login.this, Register.class);
-                startActivity(toRegister);
-            }
-        });
+
     }
 
     private void loginUser(String uEmail, String uPass) {
@@ -77,14 +83,6 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    private void goToMain() {
-        Intent toMain = new Intent(Login.this, Main.class);
-        toMain.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        toMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(toMain);
-    }
-
-    /*
     @Override
     protected void onStart() {
         super.onStart();
@@ -92,7 +90,15 @@ public class Login extends AppCompatActivity {
         if (user != null) {
             goToMain();
         }
-    }*/
+    }
+
+    private void goToMain() {
+        Intent toMain = new Intent(Login.this, Main.class);
+        toMain.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        toMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(toMain);
+    }
+
     private void setError() {
         email.setErrorEnabled(false);
         passwd.setErrorEnabled(false);
