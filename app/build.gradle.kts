@@ -58,4 +58,7 @@ dependencies {
     implementation("com.firebaseui:firebase-ui-firestore:8.0.2")
     implementation("com.google.firebase:firebase-storage:20.3.0")
 
+    //calendar
+    implementation ("androidx.cardview:cardview:1.0.0")
+
 }
