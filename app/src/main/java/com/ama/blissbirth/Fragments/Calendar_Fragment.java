@@ -1,6 +1,8 @@
 package com.ama.blissbirth.Fragments;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -26,10 +28,20 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
+import com.ama.blissbirth.BirthdayAlarmReceiver;
 import com.ama.blissbirth.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 import android.Manifest;
 
 /**
@@ -39,36 +51,21 @@ import android.Manifest;
  */
 public class Calendar_Fragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
 
     private DatePicker datePicker;
     private Button addBirthdayButton;
 
-    // Constante para identificar la solicitud de permisos
     private static final int MY_PERMISSIONS_REQUEST_WRITE_CALENDAR = 123;
-
+    private FirebaseFirestore db;
 
     public Calendar_Fragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Calendar_Fragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Calendar_Fragment newInstance(String param1, String param2) {
         Calendar_Fragment fragment = new Calendar_Fragment();
         Bundle args = new Bundle();
@@ -85,9 +82,10 @@ public class Calendar_Fragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }
 
-    // Dentro de tu fragmento de calendario
+        // Inicializar Firestore
+        db = FirebaseFirestore.getInstance();
+    }
 
     @Nullable
     @Override
@@ -103,7 +101,7 @@ public class Calendar_Fragment extends Fragment {
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_CALENDAR}, MY_PERMISSIONS_REQUEST_WRITE_CALENDAR);
                 } else {
-                    guardarCumpleaños();
+                    showBirthdayDialog();
                 }
             }
         });
@@ -111,21 +109,21 @@ public class Calendar_Fragment extends Fragment {
         return rootView;
     }
 
+
+
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_WRITE_CALENDAR: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    guardarCumpleaños();
-                } else {
-                    Toast.makeText(getActivity(), "Permiso denegado para escribir en el calendario", Toast.LENGTH_SHORT).show();
-                }
-                return;
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_PERMISSIONS_REQUEST_WRITE_CALENDAR) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                showBirthdayDialog();
+            } else {
+                Toast.makeText(getActivity(), "Permiso denegado para escribir en el calendario", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void guardarCumpleaños() {
+    private void showBirthdayDialog() {
         int year = datePicker.getYear();
         int month = datePicker.getMonth();
         int dayOfMonth = datePicker.getDayOfMonth();
@@ -141,7 +139,12 @@ public class Calendar_Fragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String name = input.getText().toString();
-                guardarCumpleañosEnCalendario(getActivity(), year, month, dayOfMonth, name);
+                if (!name.isEmpty()) {
+                    guardarCumpleañosEnCalendario(getActivity(), year, month, dayOfMonth, name);
+                    guardarCumpleañosEnFirestore(name, year, month, dayOfMonth);
+                } else {
+                    Toast.makeText(getActivity(), "El nombre no puede estar vacío", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -181,6 +184,74 @@ public class Calendar_Fragment extends Fragment {
             Toast.makeText(context, "Error al guardar el cumpleaños: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void guardarCumpleañosEnFirestore(String name, int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, dayOfMonth, 8, 0);  // Establecer la hora de la alarma (8 AM en este caso)
+
+        Date date = calendar.getTime();
+        Timestamp timestamp = new Timestamp(date);
+
+        String id = db.collection("birthdays").document().getId();
+
+        Map<String, Object> birthday = new HashMap<>();
+        birthday.put("id", id);
+        birthday.put("name", name);
+        birthday.put("date", timestamp);
+
+        db.collection("birthdays").document(id)
+                .set(birthday)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Firebase", "Cumpleaños guardado exitosamente en Firestore");
+                        Toast.makeText(getActivity(), "Cumpleaños guardado en Firestore", Toast.LENGTH_SHORT).show();
+                        programarNotificacion(name, calendar.getTimeInMillis());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("Firebase", "Error al guardar cumpleaños en Firestore", e);
+                        Toast.makeText(getActivity(), "Error al guardar el cumpleaños en Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void programarNotificacion(String name, long triggerAtMillis) {
+        Log.d("Calendar_Fragment", "Programando notificación para: " + name + " en " + triggerAtMillis + " milisegundos");
+
+        // Crear un calendario con la fecha y hora seleccionadas
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(triggerAtMillis);
+
+        // Establecer la hora de la alarma a las 00:00
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        // Verificar si la fecha seleccionada es anterior a la fecha actual
+        if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
+            // Si la fecha es anterior a la actual, programar la notificación para el próximo año
+            calendar.add(Calendar.YEAR, 1);
+        }
+
+        // Obtener el tiempo de disparo corregido
+        long correctedTriggerAtMillis = calendar.getTimeInMillis();
+
+        Intent intent = new Intent(getActivity(), BirthdayAlarmReceiver.class);
+        intent.putExtra("name", name);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, correctedTriggerAtMillis, pendingIntent);
+
+        Log.d("Calendar_Fragment", "Notificación programada para: " + name + " a las 00:00");
+    }
+
+
+
 
     private long getDateTimeMillis(int year, int month, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
