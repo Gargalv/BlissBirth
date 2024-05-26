@@ -6,15 +6,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.READ_CALENDAR"/>
-    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM" tools:ignore="MissingPermission" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission
+        android:name="android.permission.USE_EXACT_ALARM"
+        tools:ignore="MissingPermission" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-
 
     <application
         android:allowBackup="true"
@@ -26,14 +25,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BlissBirth.NoActionBar"
         tools:targetApi="31">
-
-        <!-- clave de la API: AIzaSyAn-0FujSzL_hmy8Ie1NTh8xWQWrElKSbY -->
+        <activity
+            android:name=".AniadirProducto"
+            android:exported="false" />
+        <activity
+            android:name=".ProductoDetalle"
+            android:exported="false" /> <!-- clave de la API: AIzaSyAn-0FujSzL_hmy8Ie1NTh8xWQWrElKSbY -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAn-0FujSzL_hmy8Ie1NTh8xWQWrElKSbY" />
-
-        <!-- Alarms -->
-        <receiver android:name=".BirthdayAlarmReceiver" android:exported="false" />
+            android:value="AIzaSyAn-0FujSzL_hmy8Ie1NTh8xWQWrElKSbY" /> <!-- Alarms -->
+        <receiver
+            android:name=".BirthdayAlarmReceiver"
+            android:exported="false" />
 
         <activity
             android:name=".Splash"
@@ -44,17 +47,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Login"
             android:exported="false" />
-
         <activity
             android:name=".Register"
             android:exported="false"
             android:parentActivityName=".Login"
-            android:theme="@style/Theme.BlissBirth"/>
-
+            android:theme="@style/Theme.BlissBirth" />
         <activity
             android:name=".Main"
             android:exported="true">
@@ -64,14 +64,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".Edit_profile"
             android:exported="false"
             android:parentActivityName=".Main"
-            android:theme="@style/Theme.BlissBirth"/>
-
+            android:theme="@style/Theme.BlissBirth" />
     </application>
 
 </manifest>
