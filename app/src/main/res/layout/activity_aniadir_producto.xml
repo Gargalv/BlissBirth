@@ -34,13 +34,13 @@
             app:layout_constraintStart_toStartOf="@+id/guidelineIzq">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nomProducto"
+                android:id="@+id/nomCumpleanios"
                 style="@style/interior_caja"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Product"
-                android:maxLength="40"
+                android:hint="Name"
                 android:inputType="text"
+                android:maxLength="40"
                 android:textColor="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -82,7 +82,7 @@
                 style="@style/interior_caja"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Price"
+                android:hint="Date"
                 android:inputType="number"
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>

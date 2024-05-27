@@ -19,7 +19,7 @@
         <item name="alpha">0.8</item>
     </style>
     <style name="interior_caja">
-        <item name="backgroundTint">@color/black</item>
+        <item name="backgroundTint">@color/white</item>
         <item name="android:textColor">@color/black</item>
     </style>
     <style name="menuBottom">

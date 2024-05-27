@@ -54,7 +54,7 @@ public class AniadirProducto extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String uid = user.getUid();
 
-        nom = findViewById(R.id.nomProducto);
+        nom = findViewById(R.id.nomCumpleanios);
         desc = findViewById(R.id.descProducto);
         prec = findViewById(R.id.precProducto);
         aniadir = findViewById(R.id.aniadir);
