@@ -17,7 +17,7 @@ import android.widget.EditText;
 import com.ama.blissbirth.Adapter.ProductAdapterFB;
 import com.ama.blissbirth.Adapter.ProductFB;
 import com.ama.blissbirth.AniadirProducto;
-import com.ama.blissbirth.ProductoDetalle;
+import com.ama.blissbirth.CumpleanosDetalle;
 import com.ama.blissbirth.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -95,7 +95,7 @@ public class Home_Fragment extends Fragment {
         // Inicializa el RecyclerView
         mRecyclerView = rootView.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        Query query = firebaseFirestore.collection("products");
+        Query query = firebaseFirestore.collection("bdaysHome");
         FirestoreRecyclerOptions<ProductFB> firestoreRecyclerOptions =
                 new FirestoreRecyclerOptions.Builder<ProductFB>().setQuery(query, ProductFB.class).build();
         mProductAdapterFB = new ProductAdapterFB(firestoreRecyclerOptions);
@@ -107,8 +107,8 @@ public class Home_Fragment extends Fragment {
                 // Obtén el modelo de producto correspondiente al documento
                 ProductFB clickedProduct = documentSnapshot.toObject(ProductFB.class);
                 // Implementa la lógica para abrir el nuevo Activity aquí
-                Intent intent = new Intent(getContext(), ProductoDetalle.class);
-                intent.putExtra("idProducto", clickedProduct.getName());
+                Intent intent = new Intent(getContext(), CumpleanosDetalle.class);
+                intent.putExtra("idCumple", clickedProduct.getName());
                 // Puedes usar Intent para iniciar un nuevo Activity, pasando la información necesaria
                 startActivity(intent);
             }
@@ -144,7 +144,7 @@ public class Home_Fragment extends Fragment {
         });
     }
     public void textSearch(String s){
-        Query query = firebaseFirestore.collection("products");
+        Query query = firebaseFirestore.collection("bdaysHome");
         FirestoreRecyclerOptions<ProductFB> firestoreRecyclerOptions =
                 new FirestoreRecyclerOptions.Builder<ProductFB>()
                         .setQuery(query.orderBy("name")
@@ -157,7 +157,7 @@ public class Home_Fragment extends Fragment {
                 // Obtén el modelo de producto correspondiente al documento
                 ProductFB clickedProduct = documentSnapshot.toObject(ProductFB.class);
                 // Implementa la lógica para abrir el nuevo Activity aquí
-                Intent intent = new Intent(getContext(), ProductoDetalle.class);
+                Intent intent = new Intent(getContext(), CumpleanosDetalle.class);
                 intent.putExtra("idProducto", clickedProduct.getName());
                 // Puedes usar Intent para iniciar un nuevo Activity, pasando la información necesaria
                 startActivity(intent);
