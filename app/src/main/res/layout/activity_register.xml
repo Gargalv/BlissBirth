@@ -32,8 +32,9 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineIzq"
         app:layout_constraintTop_toBottomOf="@+id/imagenReg"
         android:layout_marginTop="48dp"
-        style="@style/caja_texto">
-<!--    poner icono:   app:startIconDrawable="@drawable/"-->
+        style="@style/caja_texto"
+        app:startIconDrawable="@drawable/user_ic"
+    >
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -91,8 +92,9 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineIzq"
         app:layout_constraintTop_toBottomOf="@+id/password"
         style="@style/caja_texto"
-        app:passwordToggleEnabled="true">
-        <!--    poner icono:   app:startIconDrawable="@drawable/"-->
+        app:passwordToggleEnabled="true"
+        app:startIconDrawable="@drawable/lock_ic"
+    >
 
 
         <com.google.android.material.textfield.TextInputEditText
