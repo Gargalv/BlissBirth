@@ -43,7 +43,7 @@ public class Edit_cumpleanos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aniadir_producto);
-
+/*
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -55,7 +55,7 @@ public class Edit_cumpleanos extends AppCompatActivity {
         imgurlProducto = intent.getStringExtra("imgurlProducto");
         productoUid = intent.getStringExtra("productoUid");
 
-        nom = findViewById(R.id.nomCumpleanios);
+        nom = findViewById(R.id.nomCumpleanos);
         desc = findViewById(R.id.descProducto);
         prec = findViewById(R.id.precProducto);
         imageView = findViewById(R.id.imageViewPreview);
@@ -147,5 +147,5 @@ public class Edit_cumpleanos extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setTitle(Html.fromHtml("<font color=\"#F2A71B\">Edit Product</font>"));
         }
-    }
+    */}
 }
