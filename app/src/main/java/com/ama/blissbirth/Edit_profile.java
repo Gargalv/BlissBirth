@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Html;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -162,6 +163,7 @@ public class Edit_profile extends AppCompatActivity {
     }
 
     private void uploadImage(Uri imageUri, final String nuevoNombre) {
+        Log.d("URI", "URI de la imagen seleccionada: " + imageUri.toString());
         // Define la ruta en el Storage donde se almacenará la imagen
         final StorageReference imageRef = storageReference.child("images/" + firebaseAuth.getCurrentUser().getUid() + ".jpg");
 

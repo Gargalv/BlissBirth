@@ -86,7 +86,7 @@ public class AniadirProducto extends AppCompatActivity {
                         GeoPoint lCum = null;
 
                         try {
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault());
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                             Date parsedDate = dateFormat.parse(diaCumStr);
                             if (parsedDate != null) {
                                 diaCum = new Timestamp(parsedDate);
@@ -181,11 +181,11 @@ public class AniadirProducto extends AppCompatActivity {
         map.put("imgurl", imageUrl);
         map.put("userP", uid);
 
-        mFirestore.collection("products").add(map)
+        mFirestore.collection("bdaysHome").add(map)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(AniadirProducto.this, "Producto subido con éxito", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AniadirProducto.this, "Cumpleaños subido con éxito", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 })

@@ -172,13 +172,13 @@ public class CumpleanosDetalle extends AppCompatActivity {
         email.setText(String.valueOf(userMail));
     }
 
-    private void mostrarDatosEnLaInterfaz(String descripcion, String precio, String photo) {
+    private void mostrarDatosEnLaInterfaz(String descripcion, String cumple, String photo) {
         TextView descripcionTextView = findViewById(R.id.descriptionGift);
         TextView precioTextView = findViewById(R.id.regalos);
         ImageView imagenImageView = findViewById(R.id.photoProduct);
 
         descripcionTextView.setText(descripcion);
-        precioTextView.setText(precio+"€");
+        precioTextView.setText(cumple+"€");
         Glide.with(this).load(photo).centerCrop().into(imagenImageView);
     }
 

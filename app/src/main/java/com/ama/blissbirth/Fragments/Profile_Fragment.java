@@ -17,6 +17,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ama.blissbirth.Adapter.ProductAdapterFB;
+import com.ama.blissbirth.Adapter.ProductFB;
+import com.ama.blissbirth.CumpleanosDetalle;
 import com.ama.blissbirth.Edit_profile;
 import com.ama.blissbirth.Login;
 import com.ama.blissbirth.R;
@@ -42,7 +45,7 @@ public class Profile_Fragment extends Fragment {
     private ImageView profilePic;
     private TextView uName, uEmail;
     private RecyclerView mRecyclerView;
-    //private ProductAdapterFB mProductAdapterFB;
+    private ProductAdapterFB mProductAdapterFB;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
     public Profile_Fragment() {
@@ -86,7 +89,7 @@ public class Profile_Fragment extends Fragment {
         uEmail = rootView.findViewById(R.id.profileEmail);
         uEmail.setText(user.getEmail().toString());
 
-        //inicializarRecyclerView(rootView, uid);
+        inicializarRecyclerView(rootView, uid);
 
         profilePic = rootView.findViewById(R.id.profilePic);
 
@@ -157,10 +160,10 @@ public class Profile_Fragment extends Fragment {
         requireActivity().finish();
     }
 
-    /*private void inicializarRecyclerView(View rootView, String uid) {
+    private void inicializarRecyclerView(View rootView, String uid) {
         mRecyclerView = rootView.findViewById(R.id.reciclerProfile);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        Query query = firebaseFirestore.collection("products").whereEqualTo("userP", uid);
+        Query query = firebaseFirestore.collection("bdaysHome").whereEqualTo("userP", uid);
         FirestoreRecyclerOptions<ProductFB> firestoreRecyclerOptions =
                 new FirestoreRecyclerOptions.Builder<ProductFB>().setQuery(query, ProductFB.class).build();
         mProductAdapterFB = new ProductAdapterFB(firestoreRecyclerOptions);
@@ -179,7 +182,7 @@ public class Profile_Fragment extends Fragment {
             }
         });
         mRecyclerView.setAdapter(mProductAdapterFB);
-    }*/
+    }
 
     private void bucarUsuario(DocumentReference userReference) {
         userReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -208,23 +211,23 @@ public class Profile_Fragment extends Fragment {
     public void onStart() {
         super.onStart();
         mProductAdapterFB.startListening();
-    }
+    }*/
 
     @Override
     public void onPause() {
         super.onPause();
         mProductAdapterFB.stopListening();
-    }*/
+    }
     //Revisar
     /*@Override
     public void onResume() {
         super.onResume();
         mProductAdapterFB.startListening();
-    }
+    }*/
 
     @Override
     public void onStop() {
         super.onStop();
         mProductAdapterFB.stopListening();
-    }*/
+    }
 }
