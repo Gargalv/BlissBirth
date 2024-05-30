@@ -41,10 +41,10 @@
     <TextView
         android:id="@+id/descriptionGift"
         android:layout_width="326dp"
-        android:layout_height="98dp"
+        android:layout_height="60dp"
         android:layout_marginTop="8dp"
         android:padding="8dp"
-        android:text="descriptionGift"
+        android:text="Description"
         android:textColor="@color/black"
         android:textSize="16dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDer"
@@ -54,17 +54,30 @@
 
 
     <TextView
-        android:id="@+id/regalos"
+        android:id="@+id/Dategift"
         android:layout_width="329dp"
         android:layout_height="52dp"
         android:padding="8dp"
-        android:text="regalos"
+        android:text="Date"
         android:textColor="@color/black"
         android:textSize="16dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDer"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzq"
         app:layout_constraintTop_toBottomOf="@id/descriptionGift" />
+
+    <TextView
+        android:id="@+id/locgift"
+        android:layout_width="329dp"
+        android:layout_height="52dp"
+        android:padding="8dp"
+        android:text="Location"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineDer"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineIzq"
+        app:layout_constraintTop_toBottomOf="@id/Dategift" />
 
     <LinearLayout
         android:id="@+id/linearLay"
@@ -73,7 +86,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDer"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzq"
-        app:layout_constraintTop_toBottomOf="@id/regalos">
+        app:layout_constraintTop_toBottomOf="@id/locgift">
 
         <Button
             android:id="@+id/goMaps"
