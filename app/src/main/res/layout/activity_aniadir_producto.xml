@@ -82,7 +82,7 @@
                 style="@style/interior_caja"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Date"
+                android:hint="Date (yyyy-mm-dd)"
                 android:inputType="datetime"
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -101,7 +101,7 @@
                 style="@style/interior_caja"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Location"
+                android:hint="Location (latitude,longitude)"
                 android:inputType="text"
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>

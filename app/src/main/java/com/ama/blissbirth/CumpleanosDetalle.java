@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ama.blissbirth.Fragments.Map_Fragment;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -45,14 +46,7 @@ public class CumpleanosDetalle extends AppCompatActivity {
         nCum.setText(nombreC);
         //Boton para ir al maps
         Button maps = findViewById(R.id.goMaps);
-        /*maps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String uid = user.getUid();
-                aniadirAlCarrito(uid, nombreC);
-            }
-        });*/
+
 
         // Botón de contacto con el usuario
         Button contactUser = findViewById(R.id.contactUser);
@@ -174,7 +168,7 @@ public class CumpleanosDetalle extends AppCompatActivity {
 
     private void mostrarDatosEnLaInterfaz(String descripcion, String cumple, String photo) {
         TextView descripcionTextView = findViewById(R.id.descriptionGift);
-        TextView precioTextView = findViewById(R.id.regalos);
+        TextView precioTextView = findViewById(R.id.Dategift);
         ImageView imagenImageView = findViewById(R.id.photoProduct);
 
         descripcionTextView.setText(descripcion);
