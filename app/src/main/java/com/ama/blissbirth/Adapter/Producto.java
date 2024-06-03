@@ -1,12 +1,17 @@
 package com.ama.blissbirth.Adapter;
+
+import com.google.firebase.firestore.GeoPoint;
+
 public class Producto {
 
-    private String img, nom, prec;
+    private String img, nom, date;
+    private GeoPoint location;
 
-    public Producto(String img, String nom, String prec) {
+    public Producto(String img, String nom, String date, GeoPoint location) {
         this.img = img;
         this.nom = nom;
-        this.prec = prec;
+        this.date = date;
+        this.location = location;
     }
 
     public String getImg() {
@@ -25,12 +30,20 @@ public class Producto {
         this.nom = nom;
     }
 
-    public String getPrec() {
-        return prec;
+    public String getDate() {
+        return date;
     }
 
-    public void setPrec(String prec) {
-        this.prec = prec;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public GeoPoint getLocation() {
+        return location;
+    }
+
+    public void setLocation(GeoPoint location) {
+        this.location = location;
     }
 
     @Override
@@ -38,7 +51,8 @@ public class Producto {
         return "Producto{" +
                 "img='" + img + '\'' +
                 ", nom='" + nom + '\'' +
-                ", prec='" + prec + '\'' +
+                ", date='" + date + '\'' +
+                ", location='" + location + '\'' +
                 '}';
     }
 }

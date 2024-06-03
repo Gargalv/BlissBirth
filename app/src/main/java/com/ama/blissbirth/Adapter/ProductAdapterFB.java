@@ -1,20 +1,16 @@
 package com.ama.blissbirth.Adapter;
 
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ama.blissbirth.R;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -37,7 +33,8 @@ public class ProductAdapterFB extends FirestoreRecyclerAdapter<ProductFB, Produc
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull ProductFB model) {
         holder.name.setText(model.getName());
         holder.desc.setText(model.getDesc());
-        holder.price.setText(model.getPrice());
+        holder.date.setText(model.getDate());
+        //holder.location.setText(model.getLocation());
         Glide.with(holder.itemView.getContext())
                 .load(model.getImgurl()) // Usa la URL de la imagen almacenada en el modelo
                 .centerInside()
@@ -68,14 +65,15 @@ public class ProductAdapterFB extends FirestoreRecyclerAdapter<ProductFB, Produc
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, desc, price;
+        TextView name, desc, date, loc;
         ImageView imgurl;
         private View.OnClickListener listener;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.productName);
             desc = itemView.findViewById(R.id.productDesc);
-            price = itemView.findViewById(R.id.productPrice);
+            date = itemView.findViewById(R.id.productDate);
+            //loc = itemView.findViewById(R.id.imagenProducto);
             imgurl = itemView.findViewById(R.id.productImage);
             // Configurar el click en el listener
             itemView.setOnClickListener(new View.OnClickListener() {

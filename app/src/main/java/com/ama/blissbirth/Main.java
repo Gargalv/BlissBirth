@@ -7,7 +7,9 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.ama.blissbirth.Fragments.Map_Fragment;
 import com.ama.blissbirth.Fragments.SectionsPagerAdapter;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Main extends AppCompatActivity {
@@ -17,6 +19,25 @@ public class Main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Verificar si la bandera para abrir el fragmento del mapa está establecida
+        if (getIntent().getBooleanExtra("openMapFragment", false)) {
+            // La bandera está establecida, abrir el fragmento del mapa
+            Map_Fragment mapFragment = new Map_Fragment();
+            // Obtener la ubicación del intent y pasarla al fragmento del mapa, si está disponible
+            LatLng location = getIntent().getParcelableExtra("location");
+            if (location != null) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("location", location);
+                mapFragment.setArguments(bundle);
+            }
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mapFragmentContainer, mapFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+
         BottomNavigationView mybottomNavView = findViewById(R.id.bottom_navigation);
         //page adapter
         sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());

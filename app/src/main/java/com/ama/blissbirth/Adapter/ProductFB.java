@@ -1,17 +1,32 @@
 package com.ama.blissbirth.Adapter;
 
-import android.widget.ImageView;
-public class ProductFB {
-    String name, desc, price, imgurl;
+import com.google.firebase.firestore.GeoPoint;
 
-    public ProductFB(String name, String desc, String price, String imgurl) {
-        this.name = name;
-        this.desc = desc;
-        this.price = price;
-        this.imgurl = imgurl;
-    }
+public class ProductFB {
+    private String imgurl;
+    private String name;
+    private String desc;
+    private String date;
+    private GeoPoint location;
 
     public ProductFB() {
+        // Constructor vacío necesario para la deserialización de Firestore
+    }
+
+    public ProductFB(String imgurl, String name, String desc, String date, GeoPoint location) {
+        this.imgurl = imgurl;
+        this.name = name;
+        this.desc = desc;
+        this.date = date;
+        this.location = location;
+    }
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
     }
 
     public String getName() {
@@ -30,28 +45,19 @@ public class ProductFB {
         this.desc = desc;
     }
 
-    public String getPrice() {
-        return price;
+    public String getDate() {
+        return date;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getImgurl() {
-        return imgurl;
+    public GeoPoint getLocation() {
+        return location;
     }
 
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
-    }
-
-    @Override
-    public String toString() {
-        return "ProductFB{" +
-                "name='" + name + '\'' +
-                ", desc='" + desc + '\'' +
-                ", price='" + price + '\'' +
-                '}';
+    public void setLocation(GeoPoint location) {
+        this.location = location;
     }
 }

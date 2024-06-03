@@ -18,8 +18,10 @@ import android.widget.Toast;
 
 import com.ama.blissbirth.Fragments.Map_Fragment;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 
@@ -69,6 +71,7 @@ public class CumpleanosDetalle extends AppCompatActivity {
         editarP=findViewById(R.id.editProduct);
     }
 
+    //Boton editar
     private void obtenerDatosDelCumParaEditar(String nombreCum) {
         // Realiza una consulta para obtener el documento del cum
         firebaseFirestore.collection("bdaysHome")
@@ -80,16 +83,21 @@ public class CumpleanosDetalle extends AppCompatActivity {
                             // El documento existe, ahora puedes obtener más datos
                             String descripcion = document.getString("desc");
                             String dateC = document.getString("date");
-                                //String photo = document.getString("imgurl");
+                            GeoPoint locationC = document.getGeoPoint("location");
+                            String photo = document.getString("imgurl");
                             String cumUid = document.getId(); // Obtener el UID del cum
 
-                            // Envía los datos a la clase Edit_product
+                            // Convertir GeoPoint a String
+                            String locationString = locationC != null ? locationC.getLatitude() + "," + locationC.getLongitude() : "";
+
+                            // Envía los datos a la clase Edit_cumpleanos
                             Intent editProduct = new Intent(CumpleanosDetalle.this, Edit_cumpleanos.class);
-                            editProduct.putExtra("nombreCumple", nombreCum);
-                            editProduct.putExtra("descripcionProducto", descripcion);
-                            editProduct.putExtra("precioProducto", dateC);
-                                //editProduct.putExtra("imgurlProducto", photo);
-                            editProduct.putExtra("productoUid", cumUid); // Agregar el UID del producto
+                            editProduct.putExtra("nombreCum", nombreCum);
+                            editProduct.putExtra("descripcionCum", descripcion);
+                            editProduct.putExtra("diaCum", dateC);
+                            editProduct.putExtra("localizacionCum", locationString);
+                            editProduct.putExtra("imgurlCum", photo);
+                            editProduct.putExtra("cumUid", cumUid); // Agregar el UID del producto
 
                             // Agrega más extras si es necesario
                             startActivity(editProduct);
@@ -101,10 +109,11 @@ public class CumpleanosDetalle extends AppCompatActivity {
                 });
     }
 
-    private void obtenerDatosDelProducto(String nombreProducto) {
-        // Realiza una consulta para obtener el documento del producto
-        firebaseFirestore.collection("products")
-                .whereEqualTo("name", nombreProducto)
+
+    private void obtenerDatosDelProducto(String nombreCum) {
+        // Realiza una consulta para obtener el documento del cumpleaños
+        firebaseFirestore.collection("bdaysHome")
+                .whereEqualTo("name", nombreCum)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -113,9 +122,10 @@ public class CumpleanosDetalle extends AppCompatActivity {
                             String descripcion = document.getString("desc");
                             String dateC = document.getString("date");
                             String photo = document.getString("imgurl");
-                            //String userProd = document.getString("userP");
+                            GeoPoint location = document.getGeoPoint("location");
+                            String userProd = document.getString("userP");
                             // Ahora puedes usar la información como desees
-                            mostrarDatosEnLaInterfaz(descripcion, dateC, photo);
+                            mostrarDatosEnLaInterfaz(descripcion, dateC, photo, location);
                         }
                     } else {
                         // Error al realizar la consulta
@@ -123,9 +133,11 @@ public class CumpleanosDetalle extends AppCompatActivity {
                 });
     }
 
+
+
     private void obtenerDatosUsuario(String nombreProducto) {
         // Realiza una consulta para obtener el documento del producto
-        firebaseFirestore.collection("products")
+        firebaseFirestore.collection("bdaysHome")
                 .whereEqualTo("name", nombreProducto)
                 .get()
                 .addOnCompleteListener(task -> {
@@ -166,15 +178,75 @@ public class CumpleanosDetalle extends AppCompatActivity {
         email.setText(String.valueOf(userMail));
     }
 
-    private void mostrarDatosEnLaInterfaz(String descripcion, String cumple, String photo) {
+    private void mostrarDatosEnLaInterfaz(String descripcion, String dia, String photo, GeoPoint location) {
         TextView descripcionTextView = findViewById(R.id.descriptionGift);
-        TextView precioTextView = findViewById(R.id.Dategift);
+        TextView diaTextView = findViewById(R.id.Dategift);
         ImageView imagenImageView = findViewById(R.id.photoProduct);
+        Button mapsButton = findViewById(R.id.goMaps);
 
         descripcionTextView.setText(descripcion);
-        precioTextView.setText(cumple+"€");
+        diaTextView.setText(dia);
         Glide.with(this).load(photo).centerCrop().into(imagenImageView);
+
+        if (location != null) {
+            String locationText = "Lat: " + location.getLatitude() + ", Lon: " + location.getLongitude();
+            mapsButton.setText(locationText);
+
+            mapsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Obtener la ubicación del GeoPoint, si está disponible
+                    LatLng latLng = null;
+                    if (location != null) {
+                        latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    }
+
+                    // Crea un intent para abrir la actividad Main con la bandera indicando que se debe abrir el fragmento del mapa
+                    Intent intent = new Intent(CumpleanosDetalle.this, Main.class);
+                    intent.putExtra("openMapFragment", true);
+                    // Pasar la ubicación al fragmento del mapa, si está disponible
+                    if (latLng != null) {
+                        intent.putExtra("location", latLng);
+                    }
+                    startActivity(intent);
+
+                    // Cierra la actividad actual
+                    finish();
+                }
+            });
+        } else {
+            mapsButton.setText("Ubicación no disponible");
+            mapsButton.setOnClickListener(null);
+        }
     }
+
+
+    /*
+    private void abrirMapa(GeoPoint location) {
+        if (location != null) {
+            // Convierte GeoPoint a latitud y longitud
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+
+            // Crea una URI para mostrar la ubicación en un mapa
+            String geoUri = "geo:" + latitude + "," + longitude + "?q=" + latitude + "," + longitude;
+            Uri gmmIntentUri = Uri.parse(geoUri);
+
+            // Crea un intent para abrir Google Maps
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+
+            // Verifica si hay una app que puede manejar el intent
+            if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(mapIntent);
+            } else {
+                showToast("No hay aplicaciones de mapas instaladas.");
+            }
+        } else {
+            showToast("Ubicación no disponible.");
+        }
+    }
+*/
 
     private void verificarPropietarioDelProducto(String userId) {
         // Obtén el UID del usuario actual
@@ -183,13 +255,12 @@ public class CumpleanosDetalle extends AppCompatActivity {
         // Tarjetas de Usuario y Producto
         CardView cardUsuario = findViewById(R.id.cardUsuario);
         CardView cardProducto = findViewById(R.id.cardProducto);
-        Button add =findViewById(R.id.goMaps);
+        Button add = findViewById(R.id.goMaps);
 
         // Verificar si el usuario actual es el propietario del producto
         if (userId.equals(currentUserUid)) {
             // El usuario actual es el propietario del producto, ocultar tarjeta de Usuario
             cardUsuario.setVisibility(View.GONE);
-            add.setVisibility(View.GONE);
             // Mostrar tarjeta de Producto
             cardProducto.setVisibility(View.VISIBLE);
             eliminarP.setOnClickListener(new View.OnClickListener() {
@@ -211,8 +282,8 @@ public class CumpleanosDetalle extends AppCompatActivity {
             // Mostrar tarjeta de Usuario
             cardUsuario.setVisibility(View.VISIBLE);
         }
-
     }
+
 
 
     private void abrirCorreoConNombreCreadorcum(String nombreVendedor, String correoVendedor) {
