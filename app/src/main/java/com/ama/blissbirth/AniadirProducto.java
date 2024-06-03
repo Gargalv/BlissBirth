@@ -16,20 +16,17 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.firebase.Timestamp;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -82,20 +79,11 @@ public class AniadirProducto extends AppCompatActivity {
                     if (dCum.length() > 400) {
                         Toast.makeText(AniadirProducto.this, "Descripción muy larga", Toast.LENGTH_SHORT).show();
                     } else {
-                        Timestamp diaCum = null;
+                        // Conversión de fecha
+                        String diaCum = diaCumStr;
+
+                        // Conversión de localización
                         GeoPoint lCum = null;
-
-                        try {
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                            Date parsedDate = dateFormat.parse(diaCumStr);
-                            if (parsedDate != null) {
-                                diaCum = new Timestamp(parsedDate);
-                            }
-                        } catch (ParseException e) {
-                            Toast.makeText(AniadirProducto.this, "Formato de fecha y hora incorrecto", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
                         String[] locParts = locCumStr.split(",");
                         if (locParts.length == 2) {
                             try {
@@ -104,11 +92,9 @@ public class AniadirProducto extends AppCompatActivity {
                                 lCum = new GeoPoint(lat, lon);
                             } catch (NumberFormatException e) {
                                 Toast.makeText(AniadirProducto.this, "Formato de localización incorrecto", Toast.LENGTH_SHORT).show();
-                                return;
                             }
                         } else {
                             Toast.makeText(AniadirProducto.this, "Formato de localización incorrecto", Toast.LENGTH_SHORT).show();
-                            return;
                         }
 
                         postProd(nCum, dCum, diaCum, lCum, uid);
@@ -141,7 +127,7 @@ public class AniadirProducto extends AppCompatActivity {
         }
     }
 
-    private void postProd(String nCum, String dCum, Timestamp dtCum, GeoPoint lCum, String uid) {
+    private void postProd(String nCum, String dCum, String dtCum, GeoPoint lCum, String uid) {
         if (selectedImageUri != null) {
             uploadImage(selectedImageUri, nCum, dCum, dtCum, lCum, uid);
         } else {
@@ -149,7 +135,7 @@ public class AniadirProducto extends AppCompatActivity {
         }
     }
 
-    private void uploadImage(Uri imageUri, final String nCum, final String dCum, final Timestamp dtCum, final GeoPoint lCum, final String uid) {
+    private void uploadImage(Uri imageUri, final String nCum, final String dCum, final String dtCum, final GeoPoint lCum, final String uid) {
         final StorageReference imageRef = mStorageReference.child("images/" + System.currentTimeMillis() + ".jpg");
 
         imageRef.putFile(imageUri)
@@ -172,11 +158,11 @@ public class AniadirProducto extends AppCompatActivity {
                 });
     }
 
-    private void saveImageUrlToFirestore(String nCum, String dCum, Timestamp dtCum, GeoPoint lCum, String imageUrl, String uid) {
+    private void saveImageUrlToFirestore(String nCum, String dCum, String dtCum, GeoPoint lCum, String imageUrl, String uid) {
         Map<String, Object> map = new HashMap<>();
         map.put("name", nCum);
         map.put("desc", dCum);
-        map.put("date", dtCum);
+        map.put("date", dtCum); // date es un String
         map.put("location", lCum);
         map.put("imgurl", imageUrl);
         map.put("userP", uid);

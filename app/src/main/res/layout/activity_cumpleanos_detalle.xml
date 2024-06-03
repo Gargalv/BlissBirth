@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".CumpleanosDetalle"
     android:background="@color/Pale_Lavender_Pink">
+    <FrameLayout
+        android:id="@+id/mapFragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineIzq"
@@ -66,37 +70,18 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineIzq"
         app:layout_constraintTop_toBottomOf="@id/descriptionGift" />
 
-    <TextView
-        android:id="@+id/locgift"
+    <Button
+        android:id="@+id/goMaps"
         android:layout_width="329dp"
-        android:layout_height="52dp"
-        android:padding="8dp"
-        android:text="Location"
-        android:textColor="@color/black"
-        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:hint="Coordenates"
+        style="@style/boton_oscuro"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDer"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzq"
-        app:layout_constraintTop_toBottomOf="@id/Dategift" />
+        app:layout_constraintTop_toBottomOf="@id/Dategift"/>
 
-    <LinearLayout
-        android:id="@+id/linearLay"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineDer"
-        app:layout_constraintStart_toStartOf="@+id/guidelineIzq"
-        app:layout_constraintTop_toBottomOf="@id/locgift">
 
-        <Button
-            android:id="@+id/goMaps"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Open Map"
-            android:layout_weight="1"
-            style="@style/boton_oscuro"/>
-
-    </LinearLayout>
 
 
     <androidx.cardview.widget.CardView
@@ -109,7 +94,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guidelineDer"
         app:layout_constraintStart_toStartOf="@id/guidelineIzq"
-        app:layout_constraintTop_toBottomOf="@+id/linearLay">
+        app:layout_constraintTop_toBottomOf="@+id/goMaps">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -167,7 +152,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guidelineDer"
         app:layout_constraintStart_toStartOf="@id/guidelineIzq"
-        app:layout_constraintTop_toBottomOf="@+id/linearLay">
+        app:layout_constraintTop_toBottomOf="@+id/goMaps">
 
         <LinearLayout
             android:layout_width="match_parent"

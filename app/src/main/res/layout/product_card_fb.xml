@@ -52,19 +52,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/productPrice"
+                    android:id="@+id/productDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Product price"
+                    android:text="Dia cumple"
                     android:textColor="@color/Vivid_red"
                     android:layout_marginLeft="24dp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=" €"
-                    android:textColor="@color/Vivid_red"
                     android:textStyle="bold"/>
 
             </LinearLayout>

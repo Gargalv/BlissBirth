@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Html;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -18,6 +17,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -29,48 +29,51 @@ import java.util.Map;
 public class Edit_cumpleanos extends AppCompatActivity {
     private static final int PICK_IMAGE = 100;
     private StorageReference storageReference;
-    private TextInputEditText nom, desc, prec;
+    private TextInputEditText nom, desc, dia, loc;
     private ImageView imageView;
-    private Button editProduct, editImagen;
+    private Button editCum, editImagen;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
-    private String nombreProducto;
-    private String productoUid;
+    private String nombreCum;
+    private String cumUid;
     private Uri selectedImageUri;
-    private String imgurlProducto;
+    private String imgurlCum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aniadir_producto);
-/*
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
 
         Intent intent = getIntent();
-        nombreProducto = intent.getStringExtra("nombreProducto");
-        String descripcionProducto = intent.getStringExtra("descripcionProducto");
-        String precioProducto = intent.getStringExtra("precioProducto");
-        imgurlProducto = intent.getStringExtra("imgurlProducto");
-        productoUid = intent.getStringExtra("productoUid");
+        nombreCum = intent.getStringExtra("nombreCum");
+        String descripcionCum = intent.getStringExtra("descripcionCum");
+        String diaCum = intent.getStringExtra("diaCum");
+        String localizacionCum = intent.getStringExtra("localizacionCum");
+        imgurlCum = intent.getStringExtra("imgurlCum");
+        cumUid = intent.getStringExtra("cumUid");
 
         nom = findViewById(R.id.nomCumpleanos);
-        desc = findViewById(R.id.descProducto);
-        prec = findViewById(R.id.precProducto);
+        desc = findViewById(R.id.descCumpleanos);
+        dia = findViewById(R.id.diaCumpleanos);
+        loc = findViewById(R.id.localizacionCumpleanos);
         imageView = findViewById(R.id.imageViewPreview);
-        editProduct = findViewById(R.id.aniadir);
-        editProduct.setText("Editar");
+        editCum = findViewById(R.id.aniadir);
+        editCum.setText("Editar");
         editImagen = findViewById(R.id.aniadirimagen);
 
         editImagen.setOnClickListener(v -> openGallery());
-        editProduct.setOnClickListener(v -> editProductButtonClick());
+        editCum.setOnClickListener(v -> editProductButtonClick());
 
-        nom.setText(nombreProducto);
-        desc.setText(descripcionProducto);
-        prec.setText(precioProducto);
+        nom.setText(nombreCum);
+        desc.setText(descripcionCum);
+        dia.setText(diaCum);
+        loc.setText(localizacionCum);
 
-        Glide.with(this).load(imgurlProducto).centerCrop().into(imageView);
+        Glide.with(this).load(imgurlCum).centerCrop().into(imageView);
 
         topBar();
     }
@@ -78,23 +81,30 @@ public class Edit_cumpleanos extends AppCompatActivity {
     private void editProductButtonClick() {
         String nuevoNombre = String.valueOf(nom.getText());
         String nuevaDescripcion = String.valueOf(desc.getText());
-        String nuevoPrecio = String.valueOf(prec.getText());
+        String nuevoPrecio = String.valueOf(dia.getText());
+        String nuevaLocalizacionString = String.valueOf(loc.getText());
+
+        GeoPoint nuevaLocaliacion = null;
+        String[] parts = nuevaLocalizacionString.split(",");
+        double lat = Double.parseDouble(parts[0]);
+        double lng = Double.parseDouble(parts[1]);
+        nuevaLocaliacion = new GeoPoint(lat, lng);
 
         if (selectedImageUri != null) {
-            uploadImageAndUpdateProduct(productoUid, nuevoNombre, nuevaDescripcion, nuevoPrecio);
+            uploadImageAndUpdateProduct(cumUid, nuevoNombre, nuevaDescripcion, nuevoPrecio, nuevaLocaliacion);
         } else {
-            actualizarProductoEnFirestore(productoUid, nuevoNombre, nuevaDescripcion, nuevoPrecio, imgurlProducto);
+            actualizarProductoEnFirestore(cumUid, nuevoNombre, nuevaDescripcion, nuevoPrecio, nuevaLocaliacion, imgurlCum);
         }
     }
 
-    private void uploadImageAndUpdateProduct(String productoUid, String nuevoNombre, String nuevaDescripcion, String nuevoPrecio) {
+    private void uploadImageAndUpdateProduct(String productoUid, String nuevoNombre, String nuevaDescripcion, String nuevoDia, GeoPoint nuevaLocalizacion) {
         final StorageReference imageRef = storageReference.child("images/" + productoUid + ".jpg");
 
         UploadTask uploadTask = imageRef.putFile(selectedImageUri);
 
         uploadTask.addOnSuccessListener(taskSnapshot -> {
             imageRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
-                actualizarProductoEnFirestore(productoUid, nuevoNombre, nuevaDescripcion, nuevoPrecio, downloadUri.toString());
+                actualizarProductoEnFirestore(productoUid, nuevoNombre, nuevaDescripcion, nuevoDia, nuevaLocalizacion, downloadUri.toString());
             }).addOnFailureListener(e -> showToast("Error al obtener la URL de la imagen: " + e.getMessage()));
         }).addOnFailureListener(e -> showToast("Error al subir la imagen: " + e.getMessage()));
     }
@@ -103,14 +113,16 @@ public class Edit_cumpleanos extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private void actualizarProductoEnFirestore(String productoUid, String nuevoNombre, String nuevaDescripcion, String nuevoPrecio, String nuevaImageUrl) {
-        DocumentReference productoRef = firebaseFirestore.collection("products").document(productoUid);
+    private void actualizarProductoEnFirestore(String productoUid, String nuevoNombre, String nuevaDescripcion, String nuevoDia, GeoPoint nuevaLocalizacion, String nuevaImageUrl) {
+        DocumentReference productoRef = firebaseFirestore.collection("bdaysHome").document(productoUid);
 
         Map<String, Object> nuevosDatos = new HashMap<>();
         //nuevosDatos.put("name", nuevoNombre);
         nuevosDatos.put("desc", nuevaDescripcion);
-        nuevosDatos.put("price", nuevoPrecio);
+        nuevosDatos.put("date", nuevoDia);
+        nuevosDatos.put("location", nuevaLocalizacion);
         nuevosDatos.put("imgurl", nuevaImageUrl);
+
 
         productoRef.update(nuevosDatos)
                 .addOnSuccessListener(aVoid -> {
@@ -145,7 +157,7 @@ public class Edit_cumpleanos extends AppCompatActivity {
     private void topBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(Html.fromHtml("<font color=\"#F2A71B\">Edit Product</font>"));
+            actionBar.setTitle(Html.fromHtml("<font color=\"#FFFC97\">Editar Cumpleaños</font>"));
         }
-    */}
+    }
 }
