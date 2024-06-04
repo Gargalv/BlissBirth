@@ -70,16 +70,13 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineIzq"
         app:layout_constraintTop_toBottomOf="@id/descriptionGift" />
 
-    <Button
-        android:id="@+id/goMaps"
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
         android:layout_width="329dp"
-        android:layout_height="wrap_content"
-        android:hint="Coordenates"
-        style="@style/boton_oscuro"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineDer"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guidelineIzq"
-        app:layout_constraintTop_toBottomOf="@id/Dategift"/>
+        android:layout_height="115dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Dategift" />
 
 
 

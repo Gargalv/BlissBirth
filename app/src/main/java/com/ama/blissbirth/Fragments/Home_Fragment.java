@@ -16,7 +16,7 @@ import android.widget.EditText;
 
 import com.ama.blissbirth.Adapter.ProductAdapterFB;
 import com.ama.blissbirth.Adapter.ProductFB;
-import com.ama.blissbirth.AniadirProducto;
+import com.ama.blissbirth.AniadirCumpleanos;
 import com.ama.blissbirth.CumpleanosDetalle;
 import com.ama.blissbirth.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -121,7 +121,7 @@ public class Home_Fragment extends Fragment {
         aniadirProd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addProducto = new Intent(requireActivity(), AniadirProducto.class);
+                Intent addProducto = new Intent(requireActivity(), AniadirCumpleanos.class);
                 startActivity(addProducto);
             }
         });

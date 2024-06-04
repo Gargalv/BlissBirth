@@ -32,7 +32,7 @@
             android:parentActivityName=".Main"
             android:theme="@style/Theme.BlissBirth"/>
         <activity
-            android:name=".AniadirProducto"
+            android:name=".AniadirCumpleanos"
             android:exported="false"
             android:parentActivityName=".Main"
             android:theme="@style/Theme.BlissBirth" />

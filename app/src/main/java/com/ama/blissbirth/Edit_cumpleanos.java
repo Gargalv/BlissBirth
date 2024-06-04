@@ -42,7 +42,7 @@ public class Edit_cumpleanos extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aniadir_producto);
+        setContentView(R.layout.activity_aniadir_cumpleanos);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
