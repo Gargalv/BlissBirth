@@ -26,12 +26,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-public class AniadirProducto extends AppCompatActivity {
+public class AniadirCumpleanos extends AppCompatActivity {
 
     private Button aniadir, aniadirimagen;
     private TextInputEditText nom, desc, dia, loc;
@@ -46,7 +44,7 @@ public class AniadirProducto extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aniadir_producto);
+        setContentView(R.layout.activity_aniadir_cumpleanos);
         topBar();
 
         mFirestore = FirebaseFirestore.getInstance();
@@ -74,10 +72,10 @@ public class AniadirProducto extends AppCompatActivity {
                 String locCumStr = loc.getText().toString().trim();
 
                 if (nCum.isEmpty() || dCum.isEmpty() || diaCumStr.isEmpty() || locCumStr.isEmpty()) {
-                    Toast.makeText(AniadirProducto.this, "Ingrese los datos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AniadirCumpleanos.this, "Ingrese los datos", Toast.LENGTH_SHORT).show();
                 } else {
                     if (dCum.length() > 400) {
-                        Toast.makeText(AniadirProducto.this, "Descripción muy larga", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AniadirCumpleanos.this, "Descripción muy larga", Toast.LENGTH_SHORT).show();
                     } else {
                         // Conversión de fecha
                         String diaCum = diaCumStr;
@@ -91,10 +89,10 @@ public class AniadirProducto extends AppCompatActivity {
                                 double lon = Double.parseDouble(locParts[1].trim());
                                 lCum = new GeoPoint(lat, lon);
                             } catch (NumberFormatException e) {
-                                Toast.makeText(AniadirProducto.this, "Formato de localización incorrecto", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AniadirCumpleanos.this, "Formato de localización incorrecto", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(AniadirProducto.this, "Formato de localización incorrecto", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AniadirCumpleanos.this, "Formato de localización incorrecto", Toast.LENGTH_SHORT).show();
                         }
 
                         postProd(nCum, dCum, diaCum, lCum, uid);
@@ -153,7 +151,7 @@ public class AniadirProducto extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AniadirProducto.this, "Error al subir la imagen", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AniadirCumpleanos.this, "Error al subir la imagen", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -171,14 +169,14 @@ public class AniadirProducto extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(AniadirProducto.this, "Cumpleaños subido con éxito", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AniadirCumpleanos.this, "Cumpleaños subido con éxito", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AniadirProducto.this, "Error al ingresar el producto", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AniadirCumpleanos.this, "Error al ingresar el producto", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
