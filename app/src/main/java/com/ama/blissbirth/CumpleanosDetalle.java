@@ -195,23 +195,16 @@ public class CumpleanosDetalle extends AppCompatActivity {
             mapsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Obtener la ubicación del GeoPoint, si está disponible
-                    LatLng latLng = null;
-                    if (location != null) {
-                        latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    }
+                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    Map_Fragment mapFragment = new Map_Fragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("location", latLng);
+                    mapFragment.setArguments(bundle);
 
-                    // Crea un intent para abrir la actividad Main con la bandera indicando que se debe abrir el fragmento del mapa
-                    Intent intent = new Intent(CumpleanosDetalle.this, Main.class);
-                    intent.putExtra("openMapFragment", true);
-                    // Pasar la ubicación al fragmento del mapa, si está disponible
-                    if (latLng != null) {
-                        intent.putExtra("location", latLng);
-                    }
-                    startActivity(intent);
-
-                    // Cierra la actividad actual
-                    finish();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mapFragmentContainer, mapFragment)
+                            .addToBackStack(null)
+                            .commit();
                 }
             });
         } else {
