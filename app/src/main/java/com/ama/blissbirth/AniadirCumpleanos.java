@@ -184,7 +184,7 @@ public class AniadirCumpleanos extends AppCompatActivity {
     private void topBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            String titulo = getResources().getString(R.string.addProduct);
+            String titulo = getResources().getString(R.string.addBirthday);
             actionBar.setTitle(Html.fromHtml("<font color=\"#FFFC97\">" + titulo + "</font>"));
         }
     }
