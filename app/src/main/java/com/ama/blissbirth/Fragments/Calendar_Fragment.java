@@ -205,7 +205,7 @@ public class Calendar_Fragment extends Fragment {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d("Firebase", "Cumpleaños guardado exitosamente en Firestore");
-                        Toast.makeText(getActivity(), "Cumpleaños guardado en Firestore", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Cumpleaños guardado en Firestore", Toast.LENGTH_SHORT).show();
                         programarNotificacion(name, calendar.getTimeInMillis());
                     }
                 })
