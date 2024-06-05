@@ -82,7 +82,7 @@
                 style="@style/interior_caja"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Date (yyyy-mm-dd)"
+                android:hint="Date (dd/mm/yyyy)"
                 android:inputType="text"
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -125,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="SubirPhoto"
+                android:text="Upload Photo"
                 android:textColor="@color/Creamy_yellow" />
 
         </LinearLayout>
@@ -151,7 +151,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="AddProduct"
+        android:text="Add Birthday"
         android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

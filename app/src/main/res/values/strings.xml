@@ -8,5 +8,5 @@
     <string name="deleteAccount">Borrar Cuenta</string>
     <string name="deleteAccountStr">¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.</string>
     <string name="cancel">Cancelar</string>
-    <string name="addProduct">Añadir Producto</string>
+    <string name="addBirthday">Añadir Cumpleaños</string>
 </resources>
