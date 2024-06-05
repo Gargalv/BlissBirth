@@ -44,11 +44,12 @@
 
     <TextView
         android:id="@+id/descriptionGift"
-        android:layout_width="326dp"
-        android:layout_height="60dp"
+        android:layout_width="331dp"
+        android:layout_height="75dp"
         android:layout_marginTop="8dp"
+        android:maxLines="3"
         android:padding="8dp"
-        android:text="Description"
+        android:text="Description (max 99)"
         android:textColor="@color/black"
         android:textSize="16dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDer"
@@ -59,14 +60,14 @@
 
     <TextView
         android:id="@+id/Dategift"
-        android:layout_width="329dp"
-        android:layout_height="52dp"
+        android:layout_width="334dp"
+        android:layout_height="43dp"
         android:padding="8dp"
         android:text="Date"
         android:textColor="@color/black"
         android:textSize="16dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDer"
-        app:layout_constraintHorizontal_bias="1.0"
+
         app:layout_constraintStart_toStartOf="@+id/guidelineIzq"
         app:layout_constraintTop_toBottomOf="@id/descriptionGift" />
 
