@@ -87,7 +87,7 @@
             android:text="Your birthdays:"
             android:textSize="24dp"
             android:textStyle="bold"
-            android:textColor="@color/Dark_burgundy"
+            android:textColor="@color/Mint_green"
             android:layout_marginTop="8dp"/>
 
         <TextView
@@ -97,7 +97,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/texttext"
-            android:background="@color/Dark_burgundy"
+            android:background="@color/Mint_green"
             android:layout_marginTop="6dp"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"/>

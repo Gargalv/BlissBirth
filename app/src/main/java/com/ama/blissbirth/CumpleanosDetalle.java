@@ -237,8 +237,8 @@ public class CumpleanosDetalle extends AppCompatActivity implements OnMapReadyCa
             editarP.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Log.d("ProductoDetalle", "nombreProducto: " + nombreP);
-                    //obtenerDatosDelProductoParaEditar(nombreP);
+                    Log.d("CumpleanosDetalle", "nombreProducto: " + nombreC);
+                    obtenerDatosDelProductoParaEditar(nombreC);
                 }
             });
         } else {
@@ -250,6 +250,43 @@ public class CumpleanosDetalle extends AppCompatActivity implements OnMapReadyCa
 
     }
 
+    private void obtenerDatosDelProductoParaEditar(String nombreC) {
+        // Realiza una consulta para obtener el documento del producto
+        firebaseFirestore.collection("bdaysHome")
+                .whereEqualTo("name", nombreC)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            // El documento existe, ahora puedes obtener más datos
+                            String descripcion = document.getString("desc");
+                            String dia = document.getString("date");
+                            GeoPoint localizacion = document.getGeoPoint("location");
+                            double latitud = localizacion.getLatitude();
+                            double longitud = localizacion.getLongitude();
+                            String localizacionString = latitud + ", " + longitud;
+
+                            String photo = document.getString("imgurl");
+                            String productoUid = document.getId(); // Obtener el UID del producto
+
+                            // Envía los datos a la clase Edit_product
+                            Intent editProduct = new Intent(CumpleanosDetalle.this, Edit_cumpleanos.class);
+                            editProduct.putExtra("nombreCum", nombreC);
+                            editProduct.putExtra("descripcionCum", descripcion);
+                            editProduct.putExtra("diaCum", dia);
+                            editProduct.putExtra("localizacionCum", localizacionString);
+                            editProduct.putExtra("imgurlCum", photo);
+                            editProduct.putExtra("cumUid", productoUid); // Agregar el UID del producto
+
+                            // Agrega más extras si es necesario
+                            startActivity(editProduct);
+                        }
+                    } else {
+                        // Error al realizar la consulta
+                        Log.e("CumpleanosDetalle", "Error al obtener datos del cumpleaños para editar: " + task.getException());
+                    }
+                });
+    }
 
     private void eliminarProducto(String nombreCum) {
         // Realiza una consulta para obtener el documento del producto
@@ -359,7 +396,7 @@ public class CumpleanosDetalle extends AppCompatActivity implements OnMapReadyCa
     private void topBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(Html.fromHtml("<font color=\"#7EE893\">Editar Cumpleaños</font>"));
+            actionBar.setTitle(Html.fromHtml("<font color=\"#FAEFF1\">Detalles del Cumpleaños</font>"));
         }
     }
 }
