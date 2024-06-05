@@ -1,7 +1,32 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.BlissBirth" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <style name="Theme.Elec_Trade" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/Dark_burgundy</item>
+        <item name="colorPrimaryVariant">@color/Vivid_red</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/Pale_Lavender_Pink</item>
+        <item name="colorSecondaryVariant">@color/Creamy_yellow</item>
+        <item name="colorOnSecondary">@color/Dark_burgundy</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <!-- Customize your theme here. -->
+        <item name="android:navigationBarColor">@color/Dark_burgundy</item>
+        <item name="colorSurface">@color/Dark_burgundy</item>
+    </style>
+    <style name="Theme.Elec_Trade.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/Dark_burgundy</item>
+        <item name="colorPrimaryVariant">@color/Vivid_red</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/Pale_Lavender_Pink</item>
+        <item name="colorSecondaryVariant">@color/Creamy_yellow</item>
+        <item name="colorOnSecondary">@color/Dark_burgundy</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <!-- Customize your theme here. -->
+        <item name="android:navigationBarColor">@color/Dark_burgundy</item>
     </style>
 </resources>

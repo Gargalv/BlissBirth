@@ -218,13 +218,13 @@ public class Edit_profile extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             String titulo = getResources().getString(R.string.editProfile);
-            actionBar.setTitle(Html.fromHtml("<font color=\"#FFFC97\">"+titulo+"</font>"));
+            actionBar.setTitle(Html.fromHtml("<font color=\"#FFFFFF\">"+titulo+"</font>"));
 
             // Agrega un botón de eliminación de cuenta a la barra de acciones
             actionBar.setDisplayOptions(actionBar.getDisplayOptions() | ActionBar.DISPLAY_SHOW_CUSTOM);
             TextView deleteAccountButton = new TextView(actionBar.getThemedContext());
             deleteAccountButton.setText(R.string.delete);
-            deleteAccountButton.setTextColor(Color.parseColor("#F2EFE9"));
+            deleteAccountButton.setTextColor(Color.parseColor("#FF0F0B"));
             deleteAccountButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16); // Cambia el tamaño del texto según sea necesario
             ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
                     ActionBar.LayoutParams.WRAP_CONTENT,

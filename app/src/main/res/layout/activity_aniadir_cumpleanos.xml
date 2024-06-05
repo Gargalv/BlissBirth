@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Upload Photo"
-                android:textColor="@color/Creamy_yellow" />
+                android:textColor="@color/Pale_Lavender_Pink" />
 
         </LinearLayout>
 
@@ -156,6 +156,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        style="@style/boton_claro"/>
+        android:textColor="@color/Pale_Lavender_Pink"
+        android:backgroundTint="@color/Sky_blue"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

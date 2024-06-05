@@ -157,7 +157,7 @@ public class Edit_cumpleanos extends AppCompatActivity {
     private void topBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(Html.fromHtml("<font color=\"#FFFC97\">Editar Cumpleaños</font>"));
+            actionBar.setTitle(Html.fromHtml("<font color=\"#FAEFF1\">Editar Cumpleaños</font>"));
         }
     }
 }
