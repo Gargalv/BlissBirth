@@ -176,7 +176,7 @@ public class Profile_Fragment extends Fragment {
                 ProductFB clickedProduct = documentSnapshot.toObject(ProductFB.class);
                 // Implementa la lógica para abrir el nuevo Activity aquí
                 Intent intent = new Intent(getContext(), CumpleanosDetalle.class);
-                intent.putExtra("idProducto", clickedProduct.getName());
+                intent.putExtra("idCumple", clickedProduct.getName());
                 // Puedes usar Intent para iniciar un nuevo Activity, pasando la información necesaria
                 startActivity(intent);
             }
