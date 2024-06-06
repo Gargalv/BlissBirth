@@ -289,30 +289,42 @@ public class CumpleanosDetalle extends AppCompatActivity implements OnMapReadyCa
     }
 
     private void eliminarProducto(String nombreCum) {
-        // Realiza una consulta para obtener el documento del producto
-        firebaseFirestore.collection("bdaysHome")
-                .whereEqualTo("name", nombreCum)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            // El documento existe, ahora puedes eliminarlo
-                            document.getReference().delete()
-                                    .addOnSuccessListener(aVoid -> {
-                                        Toast.makeText(CumpleanosDetalle.this, "Producto eliminado correctamente", Toast.LENGTH_SHORT).show();
-                                        finish(); // Cierra la actividad actual
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        // Error al eliminar el documento
-                                        Log.e("ProductoDetalle", "Error al eliminar el producto: " + e.getMessage());
-                                    });
-                        }
-                    } else {
-                        // Error al realizar la consulta
-                        Log.e("ProductoDetalle", "Error al obtener datos del producto: " + task.getException());
-                    }
-                });
+        // Crear un AlertDialog para confirmar la eliminación
+        new AlertDialog.Builder(this)
+                .setTitle("Confirmar eliminación")
+                .setMessage("¿Estás seguro de que deseas eliminar este cumpleaños?")
+                .setPositiveButton("Sí", (dialog, which) -> {
+                    // Realiza una consulta para obtener el documento del producto
+                    firebaseFirestore.collection("bdaysHome")
+                            .whereEqualTo("name", nombreCum)
+                            .get()
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        // El documento existe, ahora puedes eliminarlo
+                                        document.getReference().delete()
+                                                .addOnSuccessListener(aVoid -> {
+                                                    Toast.makeText(CumpleanosDetalle.this, "Cumpleaños eliminado correctamente", Toast.LENGTH_SHORT).show();
+                                                    finish(); // Cierra la actividad actual
+                                                })
+                                                .addOnFailureListener(e -> {
+                                                    // Error al eliminar el documento
+                                                    Log.e("CumpleanosDetalle", "Error al eliminar el cumpleaños: " + e.getMessage());
+                                                });
+                                    }
+                                } else {
+                                    // Error al realizar la consulta
+                                    Log.e("CumpleanosDetalle", "Error al obtener datos del producto: " + task.getException());
+                                }
+                            });
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    // El usuario ha cancelado la eliminación
+                    dialog.dismiss();
+                })
+                .show();
     }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
