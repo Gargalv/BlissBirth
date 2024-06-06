@@ -134,7 +134,8 @@
                 android:layout_marginRight="8dp"
                 android:layout_weight="2"
                 android:text="Contact"
-                style="@style/boton_oscuro"/>
+                android:textColor="@color/Dark_burgundy"
+                android:backgroundTint="@color/Mint_green"/>
 
         </LinearLayout>
 
