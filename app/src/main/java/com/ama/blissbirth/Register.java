@@ -47,7 +47,7 @@ public class Register extends AppCompatActivity {
         if (actionBar != null) {
             // Configura el color del título, por ejemplo
             String titulo = "SIGN UP";
-            actionBar.setTitle(Html.fromHtml("<font color=\"#F2A71B\">"+titulo+"</font>"));
+            actionBar.setTitle(Html.fromHtml("<font color=\"#FAEFF1\">"+titulo+"</font>"));
         }
 
         su.setOnClickListener(new View.OnClickListener() {
