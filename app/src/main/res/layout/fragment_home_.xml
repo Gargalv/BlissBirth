@@ -69,12 +69,14 @@
             android:id="@+id/addProduct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginRight="24dp"
             android:layout_marginBottom="24dp"
             android:backgroundTint="@color/Sky_blue"
-            android:src="@drawable/add_ic" />
+            android:src="@drawable/add_ic"
+            android:tint="@color/Sky_blue"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

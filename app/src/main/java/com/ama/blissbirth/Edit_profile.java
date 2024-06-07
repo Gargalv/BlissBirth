@@ -218,7 +218,7 @@ public class Edit_profile extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             String titulo = getResources().getString(R.string.editProfile);
-            actionBar.setTitle(Html.fromHtml("<font color=\"#FFFFFF\">"+titulo+"</font>"));
+            actionBar.setTitle(Html.fromHtml("<font color=\"#FAEFF1\">"+titulo+"</font>"));
 
             // Agrega un botón de eliminación de cuenta a la barra de acciones
             actionBar.setDisplayOptions(actionBar.getDisplayOptions() | ActionBar.DISPLAY_SHOW_CUSTOM);
