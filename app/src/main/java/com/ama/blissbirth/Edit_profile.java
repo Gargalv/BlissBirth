@@ -207,7 +207,7 @@ public class Edit_profile extends AppCompatActivity {
         // Actualiza los datos en Firestore
         userRef.update(updates)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(Edit_profile.this, R.string.editProfile, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit_profile.this, "Perfil Actualizado", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(Edit_profile.this, "Error", Toast.LENGTH_SHORT).show();
