@@ -286,7 +286,7 @@ public class Edit_profile extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             // La cuenta ha sido eliminada exitosamente
-                            Toast.makeText(Edit_profile.this, R.string.deleteAccount, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Edit_profile.this, "Cuenta eliminada", Toast.LENGTH_SHORT).show();
                             openLoginActivity(); // Redirige a la pantalla de inicio de sesión u otra actividad según sea necesario
                         } else {
                             // Error al eliminar la cuenta
