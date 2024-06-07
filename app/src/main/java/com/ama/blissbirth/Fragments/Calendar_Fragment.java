@@ -30,10 +30,16 @@ import android.widget.Toast;
 
 import com.ama.blissbirth.BirthdayAlarmReceiver;
 import com.ama.blissbirth.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -58,9 +64,12 @@ public class Calendar_Fragment extends Fragment {
 
     private DatePicker datePicker;
     private Button addBirthdayButton;
+    private Button showBirthdaysButton;
 
     private static final int MY_PERMISSIONS_REQUEST_WRITE_CALENDAR = 123;
     private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
 
     public Calendar_Fragment() {
         // Required empty public constructor
@@ -83,8 +92,10 @@ public class Calendar_Fragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        // Inicializar Firestore
+        // Inicializar Firestore y Firebase Auth
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
     }
 
     @Nullable
@@ -94,6 +105,7 @@ public class Calendar_Fragment extends Fragment {
 
         datePicker = rootView.findViewById(R.id.datePicker);
         addBirthdayButton = rootView.findViewById(R.id.addBirthdayButton);
+        showBirthdaysButton = rootView.findViewById(R.id.showBirthdaysButton);
 
         addBirthdayButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,10 +118,52 @@ public class Calendar_Fragment extends Fragment {
             }
         });
 
+        showBirthdaysButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarCumpleaños();
+            }
+        });
+
         return rootView;
     }
 
+    private void mostrarCumpleaños() {
+        if (currentUser == null) {
+            Toast.makeText(getActivity(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        String uid = currentUser.getUid();
+
+        db.collection("birthdays")
+                .whereEqualTo("userB", uid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            StringBuilder birthdaysList = new StringBuilder();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String name = document.getString("name");
+                                Timestamp timestamp = document.getTimestamp("date");
+                                Date date = timestamp.toDate();
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                                String dateString = dateFormat.format(date);
+                                birthdaysList.append(name).append(": ").append(dateString).append("\n");
+                            }
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setTitle("Cumpleaños Guardados");
+                            builder.setMessage(birthdaysList.toString());
+                            builder.setPositiveButton("OK", null);
+                            builder.show();
+                        } else {
+                            Toast.makeText(getActivity(), "Error al recuperar cumpleaños", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -186,6 +240,13 @@ public class Calendar_Fragment extends Fragment {
     }
 
     private void guardarCumpleañosEnFirestore(String name, int year, int month, int dayOfMonth) {
+        if (currentUser == null) {
+            Toast.makeText(getActivity(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String uid = currentUser.getUid();
+
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, dayOfMonth, 8, 0);  // Establecer la hora de la alarma (8 AM en este caso)
 
@@ -198,6 +259,7 @@ public class Calendar_Fragment extends Fragment {
         birthday.put("id", id);
         birthday.put("name", name);
         birthday.put("date", timestamp);
+        birthday.put("userB", uid);  // Almacenar el UID del usuario
 
         db.collection("birthdays").document(id)
                 .set(birthday)
@@ -205,7 +267,6 @@ public class Calendar_Fragment extends Fragment {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d("Firebase", "Cumpleaños guardado exitosamente en Firestore");
-                        //Toast.makeText(getActivity(), "Cumpleaños guardado en Firestore", Toast.LENGTH_SHORT).show();
                         programarNotificacion(name, calendar.getTimeInMillis());
                     }
                 })
@@ -249,9 +310,6 @@ public class Calendar_Fragment extends Fragment {
 
         Log.d("Calendar_Fragment", "Notificación programada para: " + name + " a las 00:00");
     }
-
-
-
 
     private long getDateTimeMillis(int year, int month, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
