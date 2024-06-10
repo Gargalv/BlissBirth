@@ -9,4 +9,18 @@
     <string name="deleteAccountStr">¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.</string>
     <string name="cancel">Cancelar</string>
     <string name="addBirthday">Añadir Cumpleaños</string>
+    <string name="PermisoDen">Permiso denegado para escribir en el calendario</string>
+    <string name="AddCump">Añadir Cumpleaños</string>
+    <string name="IngreseNom">Ingrese el nombre del cumpleañero: </string>
+    <string name="Guardar">Guardar</string>
+    <string name="Nomvacio">El nombre no puede estar vacío</string>
+    <string name="Cancelar">Cancelar</string>
+    <string name="CumDe">Cumpleaños de </string>
+    <string name="CumGuardadoCalendar">Cumpleaños guardado en el calendario</string>
+    <string name="CumGuardError">Error al guardar el cumpleaños</string>
+    <string name="CumGuardExito">Cumpleaños guardado exitosamente</string>
+    <string name="asklogout">¿Quieres salir de la cuenta?</string>
+
+
+
 </resources>
