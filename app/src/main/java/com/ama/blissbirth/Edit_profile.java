@@ -316,7 +316,7 @@ public class Edit_profile extends AppCompatActivity {
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
         // Acceder a la colección "products" y eliminar los productos del usuario
-        firebaseFirestore.collection("products")
+        firebaseFirestore.collection("bdaysHome")
                 .whereEqualTo("userP", userId)
                 .get()
                 .addOnCompleteListener(task -> {
