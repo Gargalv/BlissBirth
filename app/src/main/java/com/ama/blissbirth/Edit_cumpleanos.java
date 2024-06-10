@@ -62,7 +62,7 @@ public class Edit_cumpleanos extends AppCompatActivity {
         loc = findViewById(R.id.localizacionCumpleanos);
         imageView = findViewById(R.id.imageViewPreview);
         editCum = findViewById(R.id.aniadir);
-        editCum.setText("Editar");
+        editCum.setText("Edit");
         editImagen = findViewById(R.id.aniadirimagen);
 
         editImagen.setOnClickListener(v -> openGallery());
@@ -105,8 +105,8 @@ public class Edit_cumpleanos extends AppCompatActivity {
         uploadTask.addOnSuccessListener(taskSnapshot -> {
             imageRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
                 actualizarProductoEnFirestore(productoUid, nuevoNombre, nuevaDescripcion, nuevoDia, nuevaLocalizacion, downloadUri.toString());
-            }).addOnFailureListener(e -> showToast("Error al obtener la URL de la imagen: " + e.getMessage()));
-        }).addOnFailureListener(e -> showToast("Error al subir la imagen: " + e.getMessage()));
+            }).addOnFailureListener(e -> showToast("Error getting image URL: " + e.getMessage()));
+        }).addOnFailureListener(e -> showToast("Error uploading image: " + e.getMessage()));
     }
 
     private void showToast(String message) {
@@ -126,10 +126,10 @@ public class Edit_cumpleanos extends AppCompatActivity {
 
         productoRef.update(nuevosDatos)
                 .addOnSuccessListener(aVoid -> {
-                    showToast("Cambios guardados correctamente");
+                    showToast("Changes saved successfully");
                     openMainActivity();
                 })
-                .addOnFailureListener(e -> showToast("Error al guardar cambios: " + e.getMessage()));
+                .addOnFailureListener(e -> showToast("Error saving changes: " + e.getMessage()));
     }
 
     private void openMainActivity() {
@@ -157,7 +157,7 @@ public class Edit_cumpleanos extends AppCompatActivity {
     private void topBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(Html.fromHtml("<font color=\"#FAEFF1\">Editar Cumpleaños</font>"));
+            actionBar.setTitle(Html.fromHtml("<font color=\"#FAEFF1\">Edit birthday</font>"));
         }
     }
 }

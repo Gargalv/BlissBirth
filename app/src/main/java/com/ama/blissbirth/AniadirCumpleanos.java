@@ -72,10 +72,12 @@ public class AniadirCumpleanos extends AppCompatActivity {
                 String locCumStr = loc.getText().toString().trim();
 
                 if (nCum.isEmpty() || dCum.isEmpty() || diaCumStr.isEmpty() || locCumStr.isEmpty()) {
-                    Toast.makeText(AniadirCumpleanos.this, "Ingrese los datos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AniadirCumpleanos.this, "Enter the data", Toast.LENGTH_SHORT).show();
                 } else {
                     if (dCum.length() > 400) {
-                        Toast.makeText(AniadirCumpleanos.this, "Descripción muy larga", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AniadirCumpleanos.this, "Very long description", Toast.LENGTH_SHORT).show();
+                    } else if (!isValidDate(diaCumStr)) {
+                        Toast.makeText(AniadirCumpleanos.this, "Incorrect date format. Use dd/mm/yyyy", Toast.LENGTH_SHORT).show();
                     } else {
                         // Conversión de fecha
                         String diaCum = diaCumStr;
@@ -89,10 +91,10 @@ public class AniadirCumpleanos extends AppCompatActivity {
                                 double lon = Double.parseDouble(locParts[1].trim());
                                 lCum = new GeoPoint(lat, lon);
                             } catch (NumberFormatException e) {
-                                Toast.makeText(AniadirCumpleanos.this, "Formato de localización incorrecto", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AniadirCumpleanos.this, "Incorrect localization format", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(AniadirCumpleanos.this, "Formato de localización incorrecto", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AniadirCumpleanos.this, "Incorrect localization format", Toast.LENGTH_SHORT).show();
                         }
 
                         postProd(nCum, dCum, diaCum, lCum, uid);
@@ -107,6 +109,11 @@ public class AniadirCumpleanos extends AppCompatActivity {
                 openGallery();
             }
         });
+    }
+
+    private boolean isValidDate(String date) {
+        String regex = "^\\d{2}/\\d{2}/\\d{4}$";
+        return date.matches(regex);
     }
 
     private void openGallery() {
@@ -151,7 +158,7 @@ public class AniadirCumpleanos extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AniadirCumpleanos.this, "Error al subir la imagen", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AniadirCumpleanos.this, "Error uploading image", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -169,14 +176,14 @@ public class AniadirCumpleanos extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(AniadirCumpleanos.this, "Cumpleaños subido con éxito", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AniadirCumpleanos.this, "Birthday uploaded successfully", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AniadirCumpleanos.this, "Error al ingresar el producto", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AniadirCumpleanos.this, "Error entering birthday", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -184,7 +191,7 @@ public class AniadirCumpleanos extends AppCompatActivity {
     private void topBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            String titulo = getResources().getString(R.string.addBirthday);
+            String titulo = "Add birthday";
             actionBar.setTitle(Html.fromHtml("<font color=\"#FAEFF1\">" + titulo + "</font>"));
         }
     }
