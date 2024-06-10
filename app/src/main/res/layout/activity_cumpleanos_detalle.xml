@@ -166,7 +166,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="16dp"
                 android:layout_weight="2"
-                android:text="Editar"
+                android:text="Edit"
                 android:textColor="@color/Dark_burgundy"
                 android:backgroundTint="@color/Mint_green"/>
 
@@ -176,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
                 android:layout_weight="2"
-                android:text="@string/delete"
+                android:text="Delete"
                 android:textColor="@color/Pale_Lavender_Pink"
                 android:backgroundTint="@color/Vivid_red"/>
 

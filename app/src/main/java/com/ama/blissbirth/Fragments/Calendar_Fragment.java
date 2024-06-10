@@ -130,7 +130,7 @@ public class Calendar_Fragment extends Fragment {
 
     private void mostrarCumpleaños() {
         if (currentUser == null) {
-            Toast.makeText(getActivity(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Unauthenticated user", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -154,12 +154,12 @@ public class Calendar_Fragment extends Fragment {
                             }
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                            builder.setTitle("Cumpleaños Guardados");
+                            builder.setTitle("Saved Birthdays");
                             builder.setMessage(birthdaysList.toString());
                             builder.setPositiveButton("OK", null);
                             builder.show();
                         } else {
-                            Toast.makeText(getActivity(), "Error al recuperar cumpleaños", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Error when retrieving birthdays", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -241,7 +241,7 @@ public class Calendar_Fragment extends Fragment {
 
     private void guardarCumpleañosEnFirestore(String name, int year, int month, int dayOfMonth) {
         if (currentUser == null) {
-            Toast.makeText(getActivity(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Unauthenticated user", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -266,21 +266,21 @@ public class Calendar_Fragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("Firebase", "Cumpleaños guardado exitosamente en Firestore");
+                        Log.d("Firebase", "Birthday successfully saved in Firestore");
                         programarNotificacion(name, calendar.getTimeInMillis());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e("Firebase", "Error al guardar cumpleaños en Firestore", e);
+                        Log.e("Firebase", "Error saving birthdays in Firestore", e);
                         Toast.makeText(getActivity(), R.string.CumGuardError + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
     private void programarNotificacion(String name, long triggerAtMillis) {
-        Log.d("Calendar_Fragment", "Programando notificación para: " + name + " en " + triggerAtMillis + " milisegundos");
+        Log.d("Calendar_Fragment", "Scheduling notification for: " + name + " in " + triggerAtMillis + " miliseconds");
 
         // Crear un calendario con la fecha y hora seleccionadas
         Calendar calendar = Calendar.getInstance();
@@ -308,7 +308,7 @@ public class Calendar_Fragment extends Fragment {
         AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, correctedTriggerAtMillis, pendingIntent);
 
-        Log.d("Calendar_Fragment", "Notificación programada para: " + name + " a las 00:00");
+        Log.d("Calendar_Fragment", "Notification scheduled for: " + name + " at 00:00");
     }
 
     private long getDateTimeMillis(int year, int month, int dayOfMonth) {

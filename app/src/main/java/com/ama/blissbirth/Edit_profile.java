@@ -163,7 +163,7 @@ public class Edit_profile extends AppCompatActivity {
     }
 
     private void uploadImage(Uri imageUri, final String nuevoNombre) {
-        Log.d("URI", "URI de la imagen seleccionada: " + imageUri.toString());
+        Log.d("URI", "URI of the selected image: " + imageUri.toString());
         // Define la ruta en el Storage donde se almacenará la imagen
         final StorageReference imageRef = storageReference.child("images/" + firebaseAuth.getCurrentUser().getUid() + ".jpg");
 
@@ -207,7 +207,7 @@ public class Edit_profile extends AppCompatActivity {
         // Actualiza los datos en Firestore
         userRef.update(updates)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(Edit_profile.this, "Perfil Actualizado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit_profile.this, "Updated profile", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(Edit_profile.this, "Error", Toast.LENGTH_SHORT).show();
@@ -286,7 +286,7 @@ public class Edit_profile extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             // La cuenta ha sido eliminada exitosamente
-                            Toast.makeText(Edit_profile.this, "Cuenta eliminada", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Edit_profile.this, "Deleted account", Toast.LENGTH_SHORT).show();
                             openLoginActivity(); // Redirige a la pantalla de inicio de sesión u otra actividad según sea necesario
                         } else {
                             // Error al eliminar la cuenta

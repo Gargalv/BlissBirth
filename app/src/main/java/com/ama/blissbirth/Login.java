@@ -72,7 +72,7 @@ public class Login extends AppCompatActivity {
                 } else {
                     //showToast("Email / Password incorrectas");
                     //email.setError("Revisar");
-                    passwd.setError("Revisar");
+                    passwd.setError("Review");
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

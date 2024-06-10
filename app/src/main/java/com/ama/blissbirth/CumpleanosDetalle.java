@@ -121,7 +121,7 @@ public class CumpleanosDetalle extends AppCompatActivity implements OnMapReadyCa
                         }
                     } else {
                         // Error al realizar la consulta
-                        Log.e("ProductoDetalle", "Error al obtener datos del producto para editar: " + task.getException());
+                        Log.e("ProductoDetalle", "Error getting product data to edit: " + task.getException());
                     }
                 });
     }
@@ -283,7 +283,7 @@ public class CumpleanosDetalle extends AppCompatActivity implements OnMapReadyCa
                         }
                     } else {
                         // Error al realizar la consulta
-                        Log.e("CumpleanosDetalle", "Error al obtener datos del cumpleaños para editar: " + task.getException());
+                        Log.e("CumpleanosDetalle", "Error getting birthday data to edit: " + task.getException());
                     }
                 });
     }
@@ -291,9 +291,9 @@ public class CumpleanosDetalle extends AppCompatActivity implements OnMapReadyCa
     private void eliminarProducto(String nombreCum) {
         // Crear un AlertDialog para confirmar la eliminación
         new AlertDialog.Builder(this)
-                .setTitle("Confirmar eliminación")
-                .setMessage("¿Estás seguro de que deseas eliminar este cumpleaños?")
-                .setPositiveButton("Sí", (dialog, which) -> {
+                .setTitle("Confirm deletion")
+                .setMessage("Are you sure you want to delete this birthday?")
+                .setPositiveButton("Yes", (dialog, which) -> {
                     // Realiza una consulta para obtener el documento del producto
                     firebaseFirestore.collection("bdaysHome")
                             .whereEqualTo("name", nombreCum)
@@ -304,17 +304,17 @@ public class CumpleanosDetalle extends AppCompatActivity implements OnMapReadyCa
                                         // El documento existe, ahora puedes eliminarlo
                                         document.getReference().delete()
                                                 .addOnSuccessListener(aVoid -> {
-                                                    Toast.makeText(CumpleanosDetalle.this, "Cumpleaños eliminado correctamente", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(CumpleanosDetalle.this, "Successfully deleted birthday", Toast.LENGTH_SHORT).show();
                                                     finish(); // Cierra la actividad actual
                                                 })
                                                 .addOnFailureListener(e -> {
                                                     // Error al eliminar el documento
-                                                    Log.e("CumpleanosDetalle", "Error al eliminar el cumpleaños: " + e.getMessage());
+                                                    Log.e("CumpleanosDetalle", "Error deleting birthday: " + e.getMessage());
                                                 });
                                     }
                                 } else {
                                     // Error al realizar la consulta
-                                    Log.e("CumpleanosDetalle", "Error al obtener datos del producto: " + task.getException());
+                                    Log.e("CumpleanosDetalle", "Error getting birthday data: " + task.getException());
                                 }
                             });
                 })
@@ -330,7 +330,7 @@ public class CumpleanosDetalle extends AppCompatActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         if (location != null) {
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(latLng).title("Ubicación del cumpleaños"));
+            googleMap.addMarker(new MarkerOptions().position(latLng).title("Birthday location"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
         } else {
             // Si no hay ubicación, puedes mostrar un mensaje o una ubicación por defecto
@@ -408,7 +408,7 @@ public class CumpleanosDetalle extends AppCompatActivity implements OnMapReadyCa
     private void topBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(Html.fromHtml("<font color=\"#FAEFF1\">Detalles del Cumpleaños</font>"));
+            actionBar.setTitle(Html.fromHtml("<font color=\"#FAEFF1\">Birthday details</font>"));
         }
     }
 }

@@ -7,6 +7,34 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.Home_Fragment">
 
+    <TextView
+        android:id="@+id/texttext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Reminder calendar"
+
+        android:textColor="@color/Sky_blue"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/separador"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/Sky_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/texttext" />
+
     <DatePicker
         android:id="@+id/datePicker"
         android:layout_width="wrap_content"
@@ -21,7 +49,7 @@
         android:id="@+id/addBirthdayButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Añadir Cumpleaños"
+        android:text="Add birthday"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -32,7 +60,7 @@
         android:id="@+id/showBirthdaysButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mostrar Cumpleaños"
+        android:text="Show birthdays"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

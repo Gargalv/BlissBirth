@@ -2,24 +2,24 @@
     <string name="app_name">BlissBirth</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="editProfile">Editar Perfil</string>
-    <string name="delete">Borrar</string>
-    <string name="modData">Cambie el nombre o la foto</string>
-    <string name="deleteAccount">Borrar Cuenta</string>
-    <string name="deleteAccountStr">¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.</string>
-    <string name="cancel">Cancelar</string>
-    <string name="addBirthday">Añadir Cumpleaños</string>
-    <string name="PermisoDen">Permiso denegado para escribir en el calendario</string>
-    <string name="AddCump">Añadir Cumpleaños</string>
-    <string name="IngreseNom">Ingrese el nombre del cumpleañero: </string>
-    <string name="Guardar">Guardar</string>
-    <string name="Nomvacio">El nombre no puede estar vacío</string>
-    <string name="Cancelar">Cancelar</string>
-    <string name="CumDe">Cumpleaños de </string>
-    <string name="CumGuardadoCalendar">Cumpleaños guardado en el calendario</string>
-    <string name="CumGuardError">Error al guardar el cumpleaños</string>
-    <string name="CumGuardExito">Cumpleaños guardado exitosamente</string>
-    <string name="asklogout">¿Quieres salir de la cuenta?</string>
+    <string name="editProfile">Edit Profile</string>
+    <string name="delete">Delete</string>
+    <string name="modData">Change the name or photo</string>
+    <string name="deleteAccount">Delete Account</string>
+    <string name="deleteAccountStr">Are you sure you want to delete your account? This action cannot be undone.</string>
+    <string name="cancel">Cancel</string>
+    <string name="addBirthday">Add Birthday</string>
+    <string name="PermisoDen">Permission denied to write to the calendar</string>
+    <string name="AddCump">Add Birthday</string>
+    <string name="IngreseNom">Enter the name of the birthday person:</string>
+    <string name="Guardar">Save</string>
+    <string name="Nomvacio">The name cannot be empty</string>
+    <string name="Cancelar">Cancel</string>
+    <string name="CumDe">Birthday of</string>
+    <string name="CumGuardadoCalendar">Birthday saved in the calendar</string>
+    <string name="CumGuardError">Error saving the birthday</string>
+    <string name="CumGuardExito">Birthday saved successfully</string>
+    <string name="asklogout">Do you want to log out?</string>
 
 
 
