@@ -41,11 +41,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import android.Manifest;
@@ -172,7 +170,7 @@ public class Calendar_Fragment extends Fragment {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 showBirthdayDialog();
             } else {
-                Toast.makeText(getActivity(), "Permiso denegado para escribir en el calendario", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.PermisoDen, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -183,13 +181,13 @@ public class Calendar_Fragment extends Fragment {
         int dayOfMonth = datePicker.getDayOfMonth();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Añadir Cumpleaños");
-        builder.setMessage("Ingrese el nombre del cumpleañero:");
+        builder.setTitle(R.string.AddCump);
+        builder.setMessage(R.string.IngreseNom);
 
         final EditText input = new EditText(getActivity());
         builder.setView(input);
 
-        builder.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.Guardar, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String name = input.getText().toString();
@@ -197,12 +195,12 @@ public class Calendar_Fragment extends Fragment {
                     guardarCumpleañosEnCalendario(getActivity(), year, month, dayOfMonth, name);
                     guardarCumpleañosEnFirestore(name, year, month, dayOfMonth);
                 } else {
-                    Toast.makeText(getActivity(), "El nombre no puede estar vacío", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.Nomvacio, Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -217,7 +215,7 @@ public class Calendar_Fragment extends Fragment {
         ContentValues values = new ContentValues();
         values.put(CalendarContract.Events.DTSTART, getDateTimeMillis(year, month, dayOfMonth));
         values.put(CalendarContract.Events.DTEND, getDateTimeMillis(year, month, dayOfMonth));
-        values.put(CalendarContract.Events.TITLE, "Cumpleaños de " + name);
+        values.put(CalendarContract.Events.TITLE, R.string.CumDe + name);
         values.put(CalendarContract.Events.CALENDAR_ID, 1);
         values.put(CalendarContract.Events.EVENT_TIMEZONE, "UTC/GMT");
 
@@ -225,17 +223,17 @@ public class Calendar_Fragment extends Fragment {
             Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
             if (uri != null) {
                 long eventId = Long.parseLong(uri.getLastPathSegment());
-                Toast.makeText(context, "Cumpleaños guardado en el calendario", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.CumGuardadoCalendar, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(context, "Error al guardar el cumpleaños", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.CumGuardError, Toast.LENGTH_SHORT).show();
             }
 
         } catch (SecurityException e) {
             Log.e("Calendar_Fragment", "SecurityException: " + e.getMessage());
-            Toast.makeText(context, "Permiso denegado para escribir en el calendario", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.PermisoDen, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Log.e("Calendar_Fragment", "Exception: " + e.getMessage());
-            Toast.makeText(context, "Error al guardar el cumpleaños: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.CumGuardError + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -274,7 +272,7 @@ public class Calendar_Fragment extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.e("Firebase", "Error al guardar cumpleaños en Firestore", e);
-                        Toast.makeText(getActivity(), "Error al guardar el cumpleaños en Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.CumGuardError + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }

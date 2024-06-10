@@ -132,7 +132,7 @@ public class Profile_Fragment extends Fragment {
 
     private void showLogoutConfirmationDialog() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
-        builder.setTitle("Do you want to log out?");
+        builder.setTitle(R.string.asklogout);
         builder.setCancelable(false);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
